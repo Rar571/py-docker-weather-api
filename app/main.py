@@ -2,16 +2,15 @@ import os
 import requests
 
 
-API_KEY = os.environ.get("API_KEY")
-if not API_KEY:
-    raise SystemExit("API_KEY is required")
-
 CITY = "Paris"
 URL = "http://api.weatherapi.com/v1/current.json"
 
 
 def get_weather() -> None:
-    params = {"key": API_KEY, "q": CITY}
+    api_key = os.environ.get("API_KEY")
+    if not api_key:
+        raise SystemExit("API_KEY is required")
+    params = {"key": api_key, "q": CITY}
     try:
         resp = requests.get(URL, params=params, timeout=10)
         resp.raise_for_status()
